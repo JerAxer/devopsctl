@@ -316,6 +316,8 @@ devopsctl/
 └── logs/
     └── devopsctl.log      # Auto-generated audit log
 ```
+---
+
 ## 🧪 Testing on Different Platforms
 ### ✅ Linux (Full Support)
 All features work natively.
