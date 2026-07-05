@@ -44,6 +44,7 @@ Just copy and paste this into your terminal:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/JerAxer/devopsctl/main/auto-install.sh | bash
+```
 
 
 ### Manual Install
@@ -51,6 +52,7 @@ curl -fsSL https://raw.githubusercontent.com/JerAxer/devopsctl/main/auto-install
 git clone https://github.com/JerAxer/devopsctl.git
 cd devopsctl
 bash auto-install.sh
+```
 
 ### Windows Users
 Use Git Bash (comes with Git for Windows)
@@ -63,7 +65,7 @@ The devopsctl command is now globally available. Open a new terminal and type:
 
 ```bash
 devopsctl --help
-
+```
 ### 2. Interactive Mode
 Just type devopsctl to open the beautiful menu-driven interface:
 
@@ -127,7 +129,7 @@ Top 5 Processes by CPU:
  2.1  5678 root     nginx
 ...
 [INFO] Monitor executed.
-
+```
 ### Example 2: Generate a Report
 
 ```bash
@@ -137,7 +139,9 @@ A beautiful HTML dashboard and a TXT summary are generated:
 text
 [✔] Reports generated in /var/backups/devopsctl/reports
 HTML Report: /var/backups/devopsctl/reports/report_20260705_163846.html
+
 TXT Report:  /var/backups/devopsctl/reports/report_20260705_163846.txt
+```
 ### Example 3: Deploy an Application
 
 ```bash
@@ -153,13 +157,14 @@ Build the project
 Restart the service
 
 Create a backup snapshot for rollback
+```
 
 ### Example 4: Rollback a Deployment
 
 ```bash
 devopsctl deploy --rollback
 Instantly reverts to the previous deployment snapshot.
-
+```
 ### Example 5: Secure a Server
 
 ```bash
@@ -171,6 +176,7 @@ UFW firewall (opens ports from config)
 Fail2Ban (prevents brute force attacks)
 
 SSH hardening (optional root login disable)
+```
 
 ### Example 6: Multi-Server Orchestration
 
@@ -189,7 +195,7 @@ Filesystem      Size  Used Avail Use% Mounted on
 --- Running on: root@192.168.1.102 ---
 Filesystem      Size  Used Avail Use% Mounted on
 /dev/sda1        50G   15G   35G  30% /
-
+```
 ## ⚙️ Configuration
 After installation, edit the configuration file to customize your environment:
 
@@ -224,6 +230,7 @@ SERVERS_LIST="root@192.168.1.101,root@192.168.1.102,ubuntu@staging-server"
 
 # Safety
 SAFE_MODE="true"          # Set to "false" to disable safety confirmations
+```
 ## 🌐 Multi-Server Orchestration
 Manage a fleet of servers from one terminal.
 
@@ -235,14 +242,17 @@ ssh-keygen -t rsa
 ssh-copy-id root@192.168.1.101
 ssh-copy-id root@192.168.1.102
 Add servers to config:
+```
 ----
+
 ```bash
 SERVERS_LIST="root@192.168.1.101,root@192.168.1.102,ubuntu@staging-server"
 Run commands:
 
-bash
+```bash
 devopsctl remote
 Test Setup (Docker)
+```
 If you want to test multi-server orchestration locally:
 
 ```bash
@@ -263,7 +273,8 @@ echo 'SERVERS_LIST="root@<ip1>,root@<ip2>"' > config/settings.conf
 
 # Test
 devopsctl remote
-🛡️ Safety System
+```
+## 🛡️ Safety System
 devopsctl includes safety features to protect your servers:
 
 Feature	Description
@@ -272,13 +283,14 @@ Confirmations	Always asks "y/N" before risky operations
 Rollback System	Every deployment creates a backup snapshot
 Error Handling	All failures are logged with meaningful messages
 --force Flag	Bypass confirmations when you're sure
-bash
+```bash
 # Normal operation (asks for confirmation)
 devopsctl clean
 
 # Force operation (skips confirmation)
 devopsctl clean --force
-📂 Project Structure
+```
+## 📂 Project Structure
 text
 devopsctl/
 ├── devopsctl              # Main executable
@@ -301,80 +313,89 @@ devopsctl/
 │   └── remote.sh          # Multi-server orchestration
 └── logs/
     └── devopsctl.log      # Auto-generated audit log
-🧪 Testing on Different Platforms
-✅ Linux (Full Support)
+    
+## 🧪 Testing on Different Platforms
+### ✅ Linux (Full Support)
 All features work natively.
 
-✅ macOS (Most Features)
+### ✅ macOS (Most Features)
 Monitor, Report, Clean, Backup, Deploy work
 
 Secure module (UFW, Fail2Ban) requires Linux
 
-✅ Windows (Git Bash)
+### ✅ Windows (Git Bash)
 Monitor, Report, Clean, Backup work
 
 Deploy works with Git installed
 
 Secure requires WSL or Docker
 
-🐳 Docker Testing
+### 🐳 Docker Testing
 For full Linux testing on Windows:
 
-bash
+```bash
 docker run -it --rm -v ~/devopsctl:/app ubuntu:22.04 bash
 cd /app
 apt update && apt install -y sudo curl git systemctl iproute2 procps ufw fail2ban bc
 ./devopsctl monitor
 ./devopsctl report
 ./devopsctl secure --force
-🔧 Troubleshooting
+```
+## 🔧 Troubleshooting
 Command not found after installation
 Open a new terminal or run:
 
-bash
+```bash
 source ~/.bashrc
-Permission denied
-bash
+```
+### Permission denied
+```bash
 chmod +x ~/devopsctl/devopsctl
-Line endings errors on Windows (CRLF)
+```
+### Line endings errors on Windows (CRLF)
+
 Fix all files:
 
-bash
+```bash
 cd ~/devopsctl
 sed -i 's/\r$//' devopsctl
 sed -i 's/\r$//' modules/*.sh
 sed -i 's/\r$//' lib/*.sh
 sed -i 's/\r$//' config/settings.conf
-SSH connection refused
-bash
+```
+### SSH connection refused
+```bash
 # On the target server
 systemctl status ssh
 service ssh start
-📊 Logging
+```
+## 📊 Logging
 All actions are logged to:
-
+```bash
 text
 ~/devopsctl/logs/devopsctl.log
+```
 View logs:
 
-bash
+```bash
 devopsctl logs
-📄 License
+```
+## 📄 License
 This project is licensed under the MIT License – you are free to use, modify, and sell it commercially.
 
-👨‍💻 Author
-Developed by MK youcef
+## 👨‍💻 Author
+## Developed by MK youcef
 
 Passionate DevOps engineer automating the world, one Bash script at a time.
 
 GitHub: JerAxer
 
-⭐ Show Your Support
+## ⭐ Show Your Support
 If this toolkit saved you time or made your life easier, please give this repository a star ⭐ on GitHub! It helps others discover it.
 
-📬 Contact & Support
-🐛 Issues: https://github.com/JerAxer/devopsctl/issues
+### 📬 Contact & Support
+### 🐛 Issues: https://github.com/JerAxer/devopsctl/issues
 
-💬 Discussions: https://github.com/JerAxer/devopsctl/discussions
+### 💬 Discussions: https://github.com/JerAxer/devopsctl/discussions
 
 Happy DevOps-ing! 🚀
