@@ -69,9 +69,10 @@ devopsctl --help
 ### 2. Interactive Mode
 Just type devopsctl to open the beautiful menu-driven interface:
 
-bash
+```bash
 devopsctl
-text
+```
+```text
   _____                      _        _____ _ _
  |  __ \                    | |      / ____| | |
  | |  | | ___  ___  ___  ___| |_    | |    | | | ___
@@ -87,12 +88,13 @@ Version 1.1.0 - DevOps Production Toolkit
 10) Remote (Multi-Server)           0) Exit
 
 Select option:
+```
 3. Command Line Mode
 Run specific commands directly:
 
-bash
+```bash
 devopsctl <command> [options]
-
+```
 ## 📋 Available Commands
 
 Command	Description	Example
