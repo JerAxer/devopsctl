@@ -293,7 +293,7 @@ devopsctl clean
 devopsctl clean --force
 ```
 ## 📂 Project Structure
-text
+```text
 devopsctl/
 ├── devopsctl              # Main executable
 ├── auto-install.sh        # Zero-touch installer
@@ -315,7 +315,7 @@ devopsctl/
 │   └── remote.sh          # Multi-server orchestration
 └── logs/
     └── devopsctl.log      # Auto-generated audit log
-    
+    ```
 ## 🧪 Testing on Different Platforms
 ### ✅ Linux (Full Support)
 All features work natively.
