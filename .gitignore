@@ -1,0 +1,28 @@
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.tar.gz
+*.zip
+*.bak
+
+# Temporary files
+*.tmp
+*.temp
+/tmp/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Reports (optional)
+reports/
+*.html
+*.txt

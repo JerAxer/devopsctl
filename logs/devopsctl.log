@@ -1,0 +1,6 @@
+[2026-07-05 17:57:59] [INFO] Configuration loaded successfully.
+[2026-07-05 17:57:59] [ERROR] Destructive action blocked. Use --force or disable SAFE_MODE in config.
+[2026-07-05 17:58:38] [INFO] Configuration loaded successfully.
+[2026-07-05 17:58:39] [INFO] Firewall configured with ports: 22,80,443
+[2026-07-05 17:58:40] [INFO] Fail2Ban installed and running.
+[2026-07-05 17:58:41] [SUCCESS] Security hardening completed.

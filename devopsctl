@@ -1,0 +1,152 @@
+#!/usr/bin/env bash
+# devopsctl - DevOps Toolkit Main Entry Point
+
+VERSION="1.1.0"
+
+# --- ULTRA-ROBUST SCRIPT LOCATION DETECTION ---
+# Works on Linux, macOS, and Windows/Git Bash
+# Resolves symlinks, handles all edge cases
+
+get_script_dir() {
+    local source="${BASH_SOURCE[0]}"
+    local dir=""
+    
+    # Try realpath first (most reliable)
+    if command -v realpath &> /dev/null; then
+        dir="$(dirname "$(realpath "$source" 2>/dev/null || echo "$source")")"
+        if [[ -d "$dir" ]]; then
+            echo "$dir"
+            return
+        fi
+    fi
+    
+    # Try readlink -f (good for Linux/macOS)
+    if command -v readlink &> /dev/null && readlink -f "$source" &> /dev/null; then
+        dir="$(dirname "$(readlink -f "$source")")"
+        if [[ -d "$dir" ]]; then
+            echo "$dir"
+            return
+        fi
+    fi
+    
+    # Fallback: just use the script's directory
+    dir="$(cd "$(dirname "$source")" && pwd)"
+    echo "$dir"
+}
+
+SCRIPT_DIR="$(get_script_dir)"
+cd "$SCRIPT_DIR" || {
+    echo "ERROR: Cannot change to script directory: $SCRIPT_DIR"
+    exit 1
+}
+
+# --- Load Core Library ---
+source lib/common.sh 2>/dev/null || {
+    echo "ERROR: lib/common.sh not found in $SCRIPT_DIR"
+    echo "Current directory: $(pwd)"
+    echo "Files in $SCRIPT_DIR:"
+    ls -la "$SCRIPT_DIR"
+    exit 1
+}
+
+load_config
+
+# --- ASCII Logo ---
+show_logo() {
+    echo -e "${BLUE}"
+    cat << "EOF"
+  _____                      _        _____ _ _      
+ |  __ \                    | |      / ____| | |     
+ | |  | | ___  ___  ___  ___| |_    | |    | | | ___ 
+ | |  | |/ _ \/ _ \/ _ \/ __| __|   | |    | | |/ _ \
+ | |__| |  __/  __/  __/\__ \ |_    | |____| | |  __/
+ |_____/ \___|\___|\___||___/\__|    \_____|_|_|\___|
+                                                      
+EOF
+    echo -e "${NC}Version $VERSION - DevOps Production Toolkit"
+    echo "---------------------------------------------"
+}
+
+# --- Interactive Menu ---
+interactive_mode() {
+    show_logo
+    echo " 1) Setup Server   2) Deploy App    3) Monitor"
+    echo " 4) Docker Mgr     5) Backup        6) Security"
+    echo " 7) Logs           8) Clean         9) Report"
+    echo "10) Remote (Multi-Server)           0) Exit"
+    echo ""
+    read -p "Select option: " choice
+    case $choice in
+        1) exec modules/setup.sh ;;
+        2) exec modules/deploy.sh ;;
+        3) exec modules/monitor.sh ;;
+        4) exec modules/docker.sh ;;
+        5) exec modules/backup.sh ;;
+        6) exec modules/secure.sh ;;
+        7) exec modules/logs.sh ;;
+        8) exec modules/clean.sh ;;
+        9) exec modules/report.sh ;;
+        10) exec modules/remote.sh ;;
+        0) exit 0 ;;
+        *) echo "Invalid option" ;;
+    esac
+}
+
+# --- Command Routing ---
+cmd_help() {
+    show_logo
+    echo "Usage: devopsctl <command> [options]"
+    echo ""
+    echo "Commands:"
+    echo "  setup      Install dependencies and configure server"
+    echo "  deploy     Deploy app from Git (supports rollback)"
+    echo "  monitor    Show system health (CPU/RAM/Disk)"
+    echo "  docker     Manage Docker containers & images"
+    echo "  backup     Backup folders or databases"
+    echo "  secure     Harden server (UFW, Fail2ban)"
+    echo "  logs       View and filter system logs"
+    echo "  clean      Remove cache, temp, and unused packages"
+    echo "  report     Generate HTML/TXT system audit report"
+    echo "  remote     Run commands on multiple servers via SSH"
+    echo "  rollback   Revert to previous deployment"
+    echo ""
+    echo "Options:"
+    echo "  --force    Skip safety confirmations"
+    echo "  --help     Show this help"
+}
+
+# --- Main Argument Parser ---
+FORCE="false"
+COMMAND=$1
+shift || true
+
+# Parse global flags
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --force) FORCE="true" ; shift ;;
+        *) break ;;
+    esac
+done
+
+# If no command, go interactive
+if [[ -z "$COMMAND" ]]; then
+    interactive_mode
+    exit 0
+fi
+
+# Route to the appropriate module
+case $COMMAND in
+    --help|-h|help) cmd_help ;;
+    setup)   [[ -f modules/setup.sh ]] && source modules/setup.sh || echo "Module missing" ;;
+    deploy)  [[ -f modules/deploy.sh ]] && source modules/deploy.sh || echo "Module missing" ;;
+    monitor) [[ -f modules/monitor.sh ]] && source modules/monitor.sh || echo "Module missing" ;;
+    docker)  [[ -f modules/docker.sh ]] && source modules/docker.sh || echo "Module missing" ;;
+    backup)  [[ -f modules/backup.sh ]] && source modules/backup.sh || echo "Module missing" ;;
+    secure)  [[ -f modules/secure.sh ]] && source modules/secure.sh || echo "Module missing" ;;
+    logs)    [[ -f modules/logs.sh ]] && source modules/logs.sh || echo "Module missing" ;;
+    clean)   [[ -f modules/clean.sh ]] && source modules/clean.sh || echo "Module missing" ;;
+    report)  [[ -f modules/report.sh ]] && source modules/report.sh || echo "Module missing" ;;
+    remote)  [[ -f modules/remote.sh ]] && source modules/remote.sh || echo "Module missing" ;;
+    rollback) echo "Rollback delegated to deploy module (use: deploy --rollback)" ;;
+    *) log "ERROR" "Unknown command: $COMMAND"; cmd_help ;;
+esac
