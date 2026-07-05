@@ -44,23 +44,27 @@ Just copy and paste this into your terminal:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/JerAxer/devopsctl/main/auto-install.sh | bash
-Manual Install
-bash
+
+
+### Manual Install
+```bash
 git clone https://github.com/JerAxer/devopsctl.git
 cd devopsctl
 bash auto-install.sh
-Windows Users
+
+### Windows Users
 Use Git Bash (comes with Git for Windows)
 
 Or use WSL (Windows Subsystem for Linux)
 
-🚀 Getting Started
-1. After Installation
+## 🚀 Getting Started
+### 1. After Installation
 The devopsctl command is now globally available. Open a new terminal and type:
 
-bash
+```bash
 devopsctl --help
-2. Interactive Mode
+
+### 2. Interactive Mode
 Just type devopsctl to open the beautiful menu-driven interface:
 
 bash
@@ -86,7 +90,9 @@ Run specific commands directly:
 
 bash
 devopsctl <command> [options]
-📋 Available Commands
+
+## 📋 Available Commands
+
 Command	Description	Example
 setup	Install dependencies and configure server	devopsctl setup
 deploy	Deploy app from Git	devopsctl deploy
@@ -100,9 +106,12 @@ clean	Remove cache, temp, and unused packages	devopsctl clean --force
 report	Generate HTML/TXT system audit report	devopsctl report
 remote	Run commands on multiple servers via SSH	devopsctl remote
 --help	Show help menu	devopsctl --help
-🎯 Usage Examples
-Example 1: Monitor System Health
-bash
+
+## 🎯 Usage Examples
+
+### Example 1: Monitor System Health
+
+```bash
 devopsctl monitor
 Output:
 
@@ -118,8 +127,10 @@ Top 5 Processes by CPU:
  2.1  5678 root     nginx
 ...
 [INFO] Monitor executed.
-Example 2: Generate a Report
-bash
+
+### Example 2: Generate a Report
+
+```bash
 devopsctl report
 A beautiful HTML dashboard and a TXT summary are generated:
 
@@ -127,8 +138,9 @@ text
 [✔] Reports generated in /var/backups/devopsctl/reports
 HTML Report: /var/backups/devopsctl/reports/report_20260705_163846.html
 TXT Report:  /var/backups/devopsctl/reports/report_20260705_163846.txt
-Example 3: Deploy an Application
-bash
+### Example 3: Deploy an Application
+
+```bash
 devopsctl deploy
 The tool will:
 
@@ -142,13 +154,15 @@ Restart the service
 
 Create a backup snapshot for rollback
 
-Example 4: Rollback a Deployment
-bash
+### Example 4: Rollback a Deployment
+
+```bash
 devopsctl deploy --rollback
 Instantly reverts to the previous deployment snapshot.
 
-Example 5: Secure a Server
-bash
+### Example 5: Secure a Server
+
+```bash
 devopsctl secure --force
 Configures:
 
@@ -158,8 +172,9 @@ Fail2Ban (prevents brute force attacks)
 
 SSH hardening (optional root login disable)
 
-Example 6: Multi-Server Orchestration
-bash
+### Example 6: Multi-Server Orchestration
+
+```bash
 devopsctl remote
 text
 1) Run a devopsctl command on all servers
@@ -174,10 +189,11 @@ Filesystem      Size  Used Avail Use% Mounted on
 --- Running on: root@192.168.1.102 ---
 Filesystem      Size  Used Avail Use% Mounted on
 /dev/sda1        50G   15G   35G  30% /
-⚙️ Configuration
+
+## ⚙️ Configuration
 After installation, edit the configuration file to customize your environment:
 
-bash
+```bash
 # Linux/macOS
 sudo nano /opt/devopsctl/config/settings.conf
 
@@ -208,19 +224,19 @@ SERVERS_LIST="root@192.168.1.101,root@192.168.1.102,ubuntu@staging-server"
 
 # Safety
 SAFE_MODE="true"          # Set to "false" to disable safety confirmations
-🌐 Multi-Server Orchestration
+## 🌐 Multi-Server Orchestration
 Manage a fleet of servers from one terminal.
 
-Setup (Production Servers)
+### Setup (Production Servers)
 Configure SSH key authentication (passwordless):
 
-bash
+```bash
 ssh-keygen -t rsa
 ssh-copy-id root@192.168.1.101
 ssh-copy-id root@192.168.1.102
 Add servers to config:
-
-bash
+----
+```bash
 SERVERS_LIST="root@192.168.1.101,root@192.168.1.102,ubuntu@staging-server"
 Run commands:
 
@@ -229,7 +245,7 @@ devopsctl remote
 Test Setup (Docker)
 If you want to test multi-server orchestration locally:
 
-bash
+```bash
 # Start two containers
 docker run -it --rm --name server1 ubuntu:22.04 bash
 docker run -it --rm --name server2 ubuntu:22.04 bash
